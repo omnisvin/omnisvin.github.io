@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OmniSVIn: Omnidirectional Underwater Visual-Inertial SLAM</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=2">
+  <link rel="icon" href="./static/images/favicon_io/favicon.ico" type="image/x-icon">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">OmniSVIn: Omnidirectional Underwater Visual-Inertial SLAM</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://alexander-guo.github.io/">Jinyuan Guo</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://sites.google.com/udel.edu/prof-ioannis-rekleitis/">Ioannis Rekleitis</a><sup>1</sup></span>
+            <!-- <span class="author-block">
+              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+            </span> -->
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Delaware</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded disabled-link"
+                   aria-disabled="true" tabindex="-1">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>OmniSVIn Code (Coming Soon)</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded disabled-link"
+                   aria-disabled="true" tabindex="-1">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Insta360 Telemetry Parser Code (Coming Soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded disabled-link"
+                   aria-disabled="true" tabindex="-1">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>OmniAqua Dataset (Coming Soon)</span>
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="hero-body">
+          <img src="./static/images/deployment_photo.png"
+                class="deployment-photo"
+                alt="Deployment photo"/>
+          <h2 class="subtitle has-text-centered">
+            OmniSVIn achieves robust underwater SLAM with a single compact, lightweight, and affordable omnidirectional action camera.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Underwater visual–inertial SLAM (VI-SLAM) is
+            challenged by low visibility, turbidity, color distortion, dynamic
+            illumination, and insufficient texture. We present OmniSVIn,
+            to our knowledge the first fully omnidirectional underwater
+            VI-SLAM system. It processes raw images from a 
+            dual-opposing-fisheye action camera using the double-sphere model,
+            preserving 360 degree coverage without remapping or 
+            field-of-view loss. Deferred landmark promotion and finite-landmark
+            retention improve landmark persistence and robustness in
+            spite of uncertain underwater observations. Opposing-fisheye
+            tracking and keyframe selection policy, together with cross-camera loop closure, 
+            exploit complementary views for steady
+            tracking and full surround revisits to improve global map
+            consistency. 
+          </p>
+          <p>
+            We also introduce OmniAqua, the first underwater
+            omnidirectional VI-SLAM dataset, of hours-long challenging
+            cave and shipwreck visual–inertial sequences. On OmniAqua,
+            OmniSVIn maintained uninterrupted tracking and produced
+            globally consistent trajectory estimates and landmark maps.
+            These results demonstrate that robust underwater SLAM is
+            achievable with one compact, lightweight, affordable, 
+            omnidirectional action camera. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Approach</h2>
+        <div class="publication-video">
+            <img src="./static/images/system_overview.png"
+                 class="system-overview-image"
+                 alt="System overview image."/>
+            <p>System Overview</p>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Approach</h2>
+        <div class="content has-text-justified">
+            <img src="./static/images/system_overview.png"
+                 class="system-overview-image"
+                 alt="System overview image."/>
+            <p class="media-description">OmniSVIn System Overview. Our system augments SVIn2, a classical 
+              nonlinear optimization-based sonar-depth-visual-inertial SLAM framework, comprising a frontend and a backend. 
+              The components with <span class="contribution-highlight">blue background</span> indicate our key contributions.
+            </p>
+            <p>
+              In the frontend, whole FoV is preserved thanks to the Double Sphere (DS) camera model since data admission.
+              Due to the higher per pixel angular uncertainty of fisheye images as compared to pinhole images 
+              and temporary false correspondences in the underwater visual observations,
+              low parallax observations remain pending while accumulating enough observations 
+              with sufficient parallax before triggering multi-view landmark promotion. 
+              At least three tracks are then required for a successful triangulation to ensure 
+              only well-constrained landmarks enter factor graph optimization.
+            </p>
+            <p>
+              In the backend, a landmark retention policy is proposed to maintain 
+              enough established landmarks for longer-term tracking despite visual degradation in underwater environments,
+              without the need of extending the local window size impractically. Without the retention, when a keyframe is marginalized, 
+              the landmarks associated with it without new observations in the temporal window will also be marginalized
+              and become unmatchable, whereas the retention mechanism keeps the landmarks and their factors explicit
+              as long as surviving observations currently exist, and this provides sources
+              for future observations to reacquire association.
+            </p>
+            <p>
+              Finally, cross-camera loop closure detection and DS-based geometric verification is performed asynchronously to 
+              achieve full-surrounding-aware revisit recognition and global map consistency.
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">OmniAqua SLAM Dataset</h2>
+    <div class="content has-text-justified">
+      <p>
+        All the sequences are captured with a single Insta360 X5 dual-fisheye action camera 
+        in its official underwater <i>Pro</i> housing,
+        which is compact, lightweight, and affordable. 
+        The camera is mounted on a handheld rig or diver propulsion vehicle (DPV) to capture the underwater scenes. 
+        The dataset includes hours-long challenging sequences from various underwater environments, 
+        e.g. caves and shipwrecks, featuring varying illumination,
+        insufficient texture, low visibility, and dynamic scene elements.
+      </p>
+
+      <img src="https://huggingface.co/datasets/alexguo/omnisvin-assets/resolve/main/dataset_grid/dataset_grid.gif"
+            class="dataset-grid-image"
+            alt="OmniAqua SLAM dataset grid."/>
+      <p class="media-description">Sequences from the OmniAqua SLAM dataset. Columns from left to right correspond to Stavronikita, Escondido, Tajma Ha and Otoch Ha.</p>
+      <p>
+        We provide both the raw 5.7K 30 FPS dual-fisheye recordings (.insv and .lrv) from the Insta360 X5 camera and the well-synchronized visual-inertial ROS2 bags, along with calibration results.
+        Our Insta360 telemetry extraction and synchronization tool is also open sourced to benefit the research community.
+      </p>
+      <div class="table-container dataset-overview">
+        <table class="table is-bordered is-striped is-fullwidth dataset-overview-table">
+          <thead>
+            <tr>
+              <th scope="col">Sequence</th>
+              <th scope="col">Otoch Ha</th>
+              <th scope="col">Tajma Ha</th>
+              <th scope="col">Escondido</th>
+              <th scope="col">SS Stav.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Scene</th>
+              <td>Cave</td>
+              <td>Cave</td>
+              <td>Cave</td>
+              <td>Shipwreck</td>
+            </tr>
+            <tr>
+              <th scope="row">Illumination</th>
+              <td>Varying</td>
+              <td>Varying</td>
+              <td>Varying</td>
+              <td>Constant</td>
+            </tr>
+            <tr>
+              <th scope="row">Visibility</th>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <th scope="row">Duration</th>
+              <td>2&nbsp;h 12&nbsp;min</td>
+              <td>2&nbsp;h 04&nbsp;min</td>
+              <td>45&nbsp;min</td>
+              <td>33&nbsp;min</td>
+            </tr>
+            <tr>
+              <th scope="row">Length (appr.)</th>
+              <td>1.8&nbsp;km</td>
+              <td>1.8&nbsp;km</td>
+              <td>600&nbsp;m</td>
+              <td>1.2&nbsp;km</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3">Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        We evaluate OmniSVIn on the OmniAqua SLAM dataset.
+        Raw 5.7K video is downsampled to 832×832px at its original
+        30 FPS to reduce the computational load without losing visual details, while the synchronized IMU data retain its 1000 Hz sampling rate from the Insta360 X5 recordings.
+        Static masks are also applied to exclude image regions occupied by the diver or
+        DPV (diver propulsion vehicle) holding the camera.
+      </p>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h3 class="title is-4">Stavronikita</h3>
+          <video id="stav_rr_x30" autoplay controls muted loop playsinline height="100%">
+            <source src="https://huggingface.co/datasets/alexguo/omnisvin-assets/resolve/main/stav_rerun_demo_final_x30_cp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="content">
+          <h3 class="title is-4">Escondido</h3>
+          <video id="escon_rr_x60" controls playsinline height="100%">
+            <source src="https://huggingface.co/datasets/alexguo/omnisvin-assets/resolve/main/escon_rerun_demo_final_x60_cp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h3 class="title is-4">Tajma Ha</h3>
+          <video id="tajmaha_rr_x60" controls playsinline height="100%">
+            <source src="https://huggingface.co/datasets/alexguo/omnisvin-assets/resolve/main/tajmaha_rerun_demo_final_x60_cp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="content">
+          <h3 class="title is-4">Otoch Ha</h3>
+          <video id="Otochha_rr_x60" controls playsinline height="100%">
+            <source src="https://huggingface.co/datasets/alexguo/omnisvin-assets/resolve/main/otochha_rerun_demo_final_x60_cp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    If you find this work or dataset useful, please cite it as such:
+    <pre>
+      <code>
+        <!-- @article{park2021nerfies,
+          author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+          title     = {Nerfies: Deformable Neural Radiance Fields},
+          journal   = {ICCV},
+          year      = {2021},} -->
+      </code>
+    </pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <!-- <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-8">
+        <div class="content">
+          <h2 class="title is-4">License</h2>
+          <p>
+            This webpage is based on the template from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+            under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
